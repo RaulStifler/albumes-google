@@ -5,16 +5,17 @@ import axios from 'axios';
 import AlbumsList from '../components/AlbumsList';
 
 class Albumes extends Component {
-    componentDidMount(){
-        if (process.env.NODE_ENV === 'production') {
-            this.loadAlbumes();
-        } else {
-            import('../data/albums').then(module => {
-                this.props.setAlbumes(module.default.albums)
-            });       
+    componentDidUpdate(){
+        if (this.props.token) {
+            if (process.env.NODE_ENV === 'production' && this.props.token) {            
+                this.loadAlbumes();
+            } else {
+                import('../data/albums').then(module => {
+                    this.props.setAlbumes(module.default.albums)
+                });       
+            }
         }
     }
-    
     loadAlbumes(){
         axios({
             url: 'https://photoslibrary.googleapis.com/v1/albums',
@@ -30,8 +31,11 @@ class Albumes extends Component {
     render(){
         return(
             <div>
-                <h2>Albumes</h2>
-                <AlbumsList albumes={this.props.albumes} setAlbum={this.props.setAlbum}/>
+                {this.props.albumes &&
+                <AlbumsList 
+                    albumes={this.props.albumes}
+                    setAlbum={this.props.setAlbum}
+                    albumSelected={this.props.albumSelected}/>}
             </div>
         );
     }    

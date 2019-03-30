@@ -6,7 +6,7 @@ import PhotosList from '../components/PhotosList';
 
 class Album extends Component {
     componentDidUpdate(prevProps){
-        if (this.props.albumSelected) {
+        if (this.props.albumSelected && this.props.albumSelected !== prevProps.albumSelected) {
             if (process.env.NODE_ENV === 'production') {
             this.loadPhotos();
         } else {
@@ -38,6 +38,8 @@ class Album extends Component {
             <PhotosList 
                 album={this.props.albumSelected} 
                 photos={this.props.photos} 
+                token={this.props.token}
+                clearPhotos={this.props.clearPhotos}
                 clearAlbum={this.props.clearAlbum}/>
         );
     }

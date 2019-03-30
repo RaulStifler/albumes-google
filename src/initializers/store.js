@@ -28,7 +28,7 @@ function albumesReducer(state=[],action){
         case 'SET_ALBUMES':
             return action.albumes;
         case 'CLEAR_ALBUMES':
-            return null;
+            return [];
         default:
             return state;
     }

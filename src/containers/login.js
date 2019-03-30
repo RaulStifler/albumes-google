@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import firebase from '../initializers/firebase';
 import AuthElements from '../components/AuthElements';
 
-import { saveToken, clearToken } from '../actions/'
+import { saveToken, clearToken, clearAlbumes, clearPhotos } from '../actions/'
 
 import { connect } from 'react-redux';
 
@@ -30,7 +30,9 @@ class Login extends Component {
 	}
 	cerrarSesion(){
 		firebase.auth().signOut().then(()=>{
-			this.props.clearToken()
+			this.props.clearToken();
+			this.props.clearAlbumes();
+			this.props.clearPhotos();
 		});
 	}
 
@@ -56,6 +58,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = {
 	saveToken,
-	clearToken
+	clearToken,
+	clearAlbumes,
+	clearPhotos
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
